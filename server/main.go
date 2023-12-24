@@ -1,6 +1,7 @@
 package main
 
 import (
+    "fmt"
     "io"
     "io/ioutil"
     "log"
@@ -39,7 +40,8 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
     }
 
     folderPath := "./data/" + userUUID
-    filePath := filepath.Join(folderPath, "archive.enc")
+    filePath := filepath.Join(folderPath, "archive.enc") // 假设文件名固定为 archive.enc
+
     if _, err := os.Stat(filePath); os.IsNotExist(err) {
         http.Error(w, "File not found", http.StatusNotFound)
         return
@@ -81,7 +83,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
     defer file.Close()
 
     folderPath := "./data/" + userUUID
-    filePath := filepath.Join(folderPath, "archive.enc")
+    filePath := filepath.Join(folderPath, "archive.enc") // Assuming a fixed file name for simplicity
     fileBytes, err := ioutil.ReadAll(file)
     if err != nil {
         http.Error(w, "Error reading file", http.StatusInternalServerError)
@@ -114,6 +116,9 @@ func main() {
     http.HandleFunc("/init-uuid", initUUIDHandler)
     http.HandleFunc("/upload", uploadHandler)
     http.HandleFunc("/download", downloadHandler)
+    http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintln(w, "PONG!!!")
+    })
 
     log.Printf("Server started on :8080")
     log.Fatal(http.ListenAndServe(":8080", nil))
