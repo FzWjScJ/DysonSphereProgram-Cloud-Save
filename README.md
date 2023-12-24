@@ -1,2 +1,19 @@
-# DysonSphereProgram-Cloud-Save
-DysonSphereProgram Cloud Save
+# 戴森球计划云存档v1.0
+
+## TODO：
+
+- [x] 存档上传下载
+
+- [x] 服务端加密存储
+
+- [ ] 游戏结束自动存档
+
+---
+
+## Usage：
+
+服务端启动server
+
+默认开启端口为8080
+
+客户端初始化ID后记住ID上传下载即可
